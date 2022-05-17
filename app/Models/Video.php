@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-
-
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Category;
@@ -15,7 +13,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Video extends Model
 {
     use HasFactory,Likeable;
-    protected $guarded = [];
+    protected $fillable = [
+        'name', 'description', 'length', 'url', 'slug', 'thumbnail', 'category_id'
+    ];
     protected $perPage =18;
     protected $with =['category','user'];
 
