@@ -11,7 +11,7 @@
             <a href="{{ route('videos.edit', $video->slug) }}" >
                 <i class="fa fa-pencil" aria-hidden="true"></i>
             </a>
-            <a class="channel-name" href="{{ route('videos.show', $video->slug) }}"><span>
+            <a class="channel-name" href="#">{{ $video->OwnerName }}<span>
                 <span class="views"><i class="fa fa-check-circle"></i><i class="fa fa-tag"></i>{{ $video->category_name }} </span>
              </a>
             <span class="views"><i class="fa fa-eye"></i>{{ $video->created_at }} </span>

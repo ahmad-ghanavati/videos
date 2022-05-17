@@ -13,12 +13,12 @@ class VideoSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-         Video::factory(2)->create(['name'=>' شهلا قنواتی']);
-         Video::factory(2)->create(['name'=>'احمد قنواتی']);
-         Video::factory(2)->create(['name'=>'ناهید قنواتی']);
-         Video::factory(2)->create(['name'=>'علیرضا قنواتی']);
-         Video::factory(1)->create(['name'=>'محمدرضا قنواتی']);
-        Video::factory(50)->create();
+     {
+    //      Video::factory(2)->create(['name'=>' شهلا قنواتی']);
+    //      Video::factory(2)->create(['name'=>'احمد قنواتی']);
+    //      Video::factory(2)->create(['name'=>'ناهید قنواتی']);
+    //      Video::factory(2)->create(['name'=>'علیرضا قنواتی']);
+    //      Video::factory(1)->create(['name'=>'محمدرضا قنواتی']);
+        Video::factory()->hasComments(4)->hasLikes(10)->count(5)->create();
     }
 }

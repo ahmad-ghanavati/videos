@@ -7,6 +7,7 @@
 
     <div id="all-output" class="col-md-12">
         <div class="row">
+            <x-validation-errors></x-validation-errors>
             <!-- Watch -->
             <div class="col-md-8">
                 <div id="watch"> 
@@ -28,8 +29,8 @@
                             
                     <div class="video-share">
                         <ul class="like">
-                            <li><a class="deslike" href="#">1250 <i class="fa fa-thumbs-down"></i></a></li>
-                            <li><a class="like" href="#">1250 <i class="fa fa-thumbs-up"></i></a></li>
+                            <li><a class="deslike" href="{{ route('dislikes.store',['likeable_type'=>'video','likeable_id'=>$video]) }}">{{ $video->dis_likes_count }} <i class="fa fa-thumbs-down"></i></a></li>
+                            <li><a class="like" href="{{ route('likes.store',['likeable_type'=>'video','likeable_id'=>$video]) }}">{{ $video->likes_count }} <i class="fa fa-thumbs-up"></i></a></li>
                         </ul>
                         <ul class="social_link">
                             <li><a class="facebook" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -47,14 +48,14 @@
                     </div><!-- // video-share -->
                     <!-- // Video Player -->
 
-
+                   
                     <!-- Chanels Item -->
                     <div class="chanel-item">
                         <div class="chanel-thumb">
-                            <a href="#"><img src="demo_img/ch-1.jpg" alt=""></a>
+                            <a href="#"><img src="{{ $video->OwnerAvatar }}" alt=""></a>
                         </div>
                         <div class="chanel-info">
-                            <a class="title" href="#">داود طاهری</a>
+                            <a class="title" href="#">{{ $video->OwnerName }}</a>
                             <span class="subscribers">436,414 اشتراک</span>
                         </div>
                         <a href="#" class="subscribe">اشتراک</a>
@@ -64,64 +65,38 @@
 
                     <!-- Comments -->
                     <div id="comments" class="post-comments">
-                        <h3 class="post-box-title"><span>19</span> نظرات</h3>
+                        <h3 class="post-box-title"><span>{{ $video->comments->count() }}</span> نظرات</h3>
                         <ul class="comments-list">
+                            @foreach ($video->comments as $comment)
+                             
                             <li>
                                 <div class="post_author">
                                     <div class="img_in">
-                                        <a href="#"><img src="demo_img/c1.jpg" alt=""></a>
+                                        <a href="#"><img src="{{ $comment->user->gravatar }}" alt=""></a>
                                     </div>
-                                    <a href="#" class="author-name">داود طاهری</a>
-                                    <time datetime="2017-03-24T18:18">مرداد 27, 1397 - 11:00</time>
+                                    <a href="#" class="author-name">{{ $comment->user->name }}</a>
+                                    <time datetime="2017-03-24T18:18">{{ $comment->created_at_In_human }}</time>
+                                    <a class="deslike" style="color:#aaaaaa"
+                                    href="{{ route('dislikes.store',['likeable_type'=>'comment' , 'likeable_id'=>$comment]) }}">{{ $comment->dislikes_count }} 
+                                    <i class="fa fa-thumbs-down"></i></a>
+                                    <a class="like" style="color:#66c0c2"
+                                    href="{{ route('likes.store',['likeable_type'=>'comment' , 'likeable_id'=>$comment]) }}">{{ $comment->likes_count }} 
+                                    <i class="fa fa-thumbs-up"></i></a>
                                 </div>
-                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                                </p>
-                                <a href="#" class="reply">پاسخ</a>
-
-                                <ul class="children">
-                                    <li>
-                                        <div class="post_author">
-                                            <div class="img_in">
-                                                <a href="#"><img src="demo_img/c2.jpg" alt=""></a>
-                                            </div>
-                                            <a href="#" class="author-name">بهمن نجاتی</a>
-                                            <time datetime="2017-03-24T18:18">مرداد 27, 1397 - 11:00</time>
-                                        </div>
-                                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از
-                                            طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و
-                                            سطرآنچنان که لازم است</p>
-                                        <a href="#" class="reply">پاسخ</a>
-                                    </li>
-                                </ul>
-
-
+                                <p>{{ $comment->body }}</p>
+                                
                             </li>
-                            <li>
-                                <div class="post_author">
-                                    <div class="img_in">
-                                        <a href="#"><img src="demo_img/c2.jpg" alt=""></a>
-                                    </div>
-                                    <a href="#" class="author-name">بهمن نجاتی</a>
-                                    <time datetime="2017-03-24T18:18">مرداد 27, 1397 - 11:00</time>
-                                </div>
-                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                    گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                                </p>
-                                <a href="#" class="reply">پاسخ</a>
-                            </li>
-
+                            @endforeach
                         </ul>
 
-
+                        @auth
                         <h3 class="post-box-title">ارسال نظرات</h3>
-                        <form>
-                            <input type="text" class="form-control" id="Name" placeholder="نام">
-                            <input type="email" class="form-control" id="Email" placeholder="ایمیل">
-                            <input type="text" class="form-control" placeholder="سایت">
-                            <textarea class="form-control" rows="8" id="Message" placeholder="پیام"></textarea>
-                            <button type="button" id="contact_submit" class="btn btn-dm">ارسال پیام</button>
+                        <form action="{{ route('comments.store',$video) }}" method="post">
+                            @csrf
+                            <textarea class="form-control"  name="body" rows="8" id="Message" placeholder="پیام"></textarea>
+                            <button  id="contact_submit" class="btn btn-dm">ارسال پیام</button>
                         </form>
+                        @endauth
                     </div>
                     <!-- // Comments -->
 
